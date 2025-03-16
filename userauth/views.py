@@ -64,13 +64,16 @@ def login_view(request):
            
             try:
                 user_instance = userauths_models.User.objects.get(email=email, is_active=True)
-                print(user_instance)
+                
                 user_authenticate = authenticate(request, email=email, password=password)
-
+                
                 if user_instance is not None:
+                    
                     login(request, user_authenticate)
-
-                    messages.success(request, "Account created successfully")
+                    
+                    messages.success(request, "Login successful")
+                    print("Logged-in User:", vars(request.user))
+                    
                     
                     next_url = request.GET.get("next", '/')
                     return redirect(next_url)
